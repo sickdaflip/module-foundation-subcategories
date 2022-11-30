@@ -1,0 +1,36 @@
+<?php
+$subcategories = $this->getCategoryCollection();
+$canShowImg = $this->canShowImage();
+?>
+<ul class="catalog-grid" id="categories-list">
+    <?php foreach ($subcategories as $subcat) { ?>
+        <li class="categorie-grid-item
+            categorie-item
+            categorie-item-info
+            categorie-item-details
+            ">
+            <a href="<?= $block->escapeUrl($subcat->getUrl()); ?>"
+               class="categorie-grid-tem__link banner"
+               aria-label="<?= $subcat->getName(); ?>">
+                <?php $title = $this->getCategoryData($subcat->getId())->getData('additional_headline'); ?>
+                <?php $title = isset($title) ? $title : $subcat->getName(); ?>
+                <?php if ($canShowImg && $subcat->getImageUrl()): ?>
+                    <img title="<?= $title; ?>"
+                         src="<?= $block->escapeUrl($subcat->getImageUrl()); ?>"
+                         alt="<?= $subcat->getName(); ?>"
+                         width="<?= $this->getImageWidth(); ?>"
+                         height="<?= $this->getImageHeight(); ?>"/>
+                <?php endif; ?>
+                <div class="banner__content">
+                    <p class="banner__text"><?= $subcat->getName(); ?></p>
+                    <span class="banner__icon">
+                        <svg class="icon arrow-right__icon" role="presentation" focusable="false">
+                            <title>Arrow right icon</title>
+                            <use href="<?= $block->escapeUrl($block->getViewFileUrl("images/icons-sprite.svg#arrow-right")) ?>"></use>
+                        </svg>
+                    </span>
+                </div>
+            </a>
+        </li>
+    <?php } ?>
+</ul>
